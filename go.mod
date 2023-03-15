@@ -1,4 +1,4 @@
-module github.com/GeertJohan/gomatrix
+module github.com/tellmeY18/KAMATRIX
 
 go 1.13
 

@@ -25,7 +25,7 @@ var opts struct {
 	Kana bool `short:"k" long:"kana" description:"Use japanese kana's only instead of a mix of ascii/alphanumeric and kana's."`
 
 	// enable logging
-	Logging bool `short:"l" long:"log" description:"Enable logging debug messages to ~/.gomatrix-log."`
+	Logging bool `short:"l" long:"log" description:"Enable logging debug messages to ~/.kamatrix-log."`
 
 	// enable profiling
 	Profile string `short:"p" long:"profile" description:"Write profile to given file path"`
@@ -37,20 +37,201 @@ var opts struct {
 // array with half width kanas as Go runes
 // source: http://en.wikipedia.org/wiki/Half-width_kana
 var halfWidthKana = []rune{
-	'｡', '｢', '｣', '､', '･', 'ｦ', 'ｧ', 'ｨ', 'ｩ', 'ｪ', 'ｫ', 'ｬ', 'ｭ', 'ｮ', 'ｯ',
-	'ｰ', 'ｱ', 'ｲ', 'ｳ', 'ｴ', 'ｵ', 'ｶ', 'ｷ', 'ｸ', 'ｹ', 'ｺ', 'ｻ', 'ｼ', 'ｽ', 'ｾ', 'ｿ',
-	'ﾀ', 'ﾁ', 'ﾂ', 'ﾃ', 'ﾄ', 'ﾅ', 'ﾆ', 'ﾇ', 'ﾈ', 'ﾉ', 'ﾊ', 'ﾋ', 'ﾌ', 'ﾍ', 'ﾎ', 'ﾏ',
-	'ﾐ', 'ﾑ', 'ﾒ', 'ﾓ', 'ﾔ', 'ﾕ', 'ﾖ', 'ﾗ', 'ﾘ', 'ﾙ', 'ﾚ', 'ﾛ', 'ﾜ', 'ﾝ', 'ﾞ', 'ﾟ',
+  'അ', 
+ 	'ആ', 
+ 	'ഇ', 
+ 	'ഈ', 
+ 	'ഉ', 
+ 	'ഊ', 
+ 	'ഋ', 
+ 	'ഌ', 
+ 	'എ', 
+ 	'ഏ', 
+ 	'ഐ', 
+ 	'ഒ', 
+ 	'ഓ', 
+ 	'ഔ', 
+ 	'ക', 
+ 	'ഖ', 
+ 	'ഗ', 
+ 	'ഘ', 
+ 	'ങ', 
+ 	'ച', 
+ 	'ഛ', 
+ 	'ജ', 
+ 	'ഝ', 
+ 	'ഞ', 
+ 	'ട', 
+ 	'ഠ', 
+ 	'ഡ', 
+ 	'ഢ', 
+ 	'ണ', 
+ 	'ത', 
+ 	'ഥ', 
+ 	'ദ', 
+ 	'ധ', 
+ 	'ന', 
+ 	'ഩ', 
+ 	'പ', 
+ 	'ഫ', 
+ 	'ബ', 
+ 	'ഭ', 
+ 	'മ', 
+ 	'യ', 
+ 	'ര', 
+ 	'റ', 
+ 	'ല', 
+ 	'ള', 
+ 	'ഴ', 
+ 	'വ', 
+ 	'ശ', 
+ 	'ഷ', 
+ 	'സ', 
+ 	'ഹ', 
+ 	'ഺ', 
+ 	'ഽ', 
+ 	'ൎ', 
+ 	'൏', 
+ 	'ൔ', 
+ 	'ൕ', 
+ 	'ൖ', 
+ 	'൘', 
+ 	'൙', 
+ 	'൚', 
+ 	'൛', 
+ 	'൜', 
+ 	'൝', 
+ 	'൞', 
+ 	'ൟ', 
+ 	'ൠ', 
+ 	'ൡ', 
+ 	'൦', 
+ 	'൧', 
+ 	'൨', 
+ 	'൩', 
+ 	'൪', 
+ 	'൫', 
+ 	'൬', 
+ 	'൭', 
+ 	'൮', 
+ 	'൯', 
+ 	'൰', 
+ 	'൱', 
+ 	'൲', 
+ 	'൳', 
+ 	'൴', 
+ 	'൵', 
+ 	'൶', 
+ 	'൷', 
+ 	'൸', 
+ 	'൹', 
+ 	'ൺ', 
+ 	'ൻ', 
+ 	'ർ', 
+ 	'ൽ', 
+ 	'ൾ', 
+ 	'ൿ', 
+
+
 }
 
 // just basic alphanumeric characters
 var alphaNumerics = []rune{
-	'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
-	'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-	'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
-	'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-	'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-}
+  'അ', 
+ 	'ആ', 
+ 	'ഇ', 
+ 	'ഈ', 
+ 	'ഉ', 
+ 	'ഊ', 
+ 	'ഋ', 
+ 	'ഌ', 
+ 	'എ', 
+ 	'ഏ', 
+ 	'ഐ', 
+ 	'ഒ', 
+ 	'ഓ', 
+ 	'ഔ', 
+ 	'ക', 
+ 	'ഖ', 
+ 	'ഗ', 
+ 	'ഘ', 
+ 	'ങ', 
+ 	'ച', 
+ 	'ഛ', 
+ 	'ജ', 
+ 	'ഝ', 
+ 	'ഞ', 
+ 	'ട', 
+ 	'ഠ', 
+ 	'ഡ', 
+ 	'ഢ', 
+ 	'ണ', 
+ 	'ത', 
+ 	'ഥ', 
+ 	'ദ', 
+ 	'ധ', 
+ 	'ന', 
+ 	'ഩ', 
+ 	'പ', 
+ 	'ഫ', 
+ 	'ബ', 
+ 	'ഭ', 
+ 	'മ', 
+ 	'യ', 
+ 	'ര', 
+ 	'റ', 
+ 	'ല', 
+ 	'ള', 
+ 	'ഴ', 
+ 	'വ', 
+ 	'ശ', 
+ 	'ഷ', 
+ 	'സ', 
+ 	'ഹ', 
+ 	'ഺ', 
+ 	'ഽ', 
+ 	'ൎ', 
+ 	'൏', 
+ 	'ൔ', 
+ 	'ൕ', 
+ 	'ൖ', 
+ 	'൘', 
+ 	'൙', 
+ 	'൚', 
+ 	'൛', 
+ 	'൜', 
+ 	'൝', 
+ 	'൞', 
+ 	'ൟ', 
+ 	'ൠ', 
+ 	'ൡ', 
+ 	'൦', 
+ 	'൧', 
+ 	'൨', 
+ 	'൩', 
+ 	'൪', 
+ 	'൫', 
+ 	'൬', 
+ 	'൭', 
+ 	'൮', 
+ 	'൯', 
+ 	'൰', 
+ 	'൱', 
+ 	'൲', 
+ 	'൳', 
+ 	'൴', 
+ 	'൵', 
+ 	'൶', 
+ 	'൷', 
+ 	'൸', 
+ 	'൹', 
+ 	'ൺ', 
+ 	'ൻ', 
+ 	'ർ', 
+ 	'ൽ', 
+ 	'ൾ', 
+ 	'ൿ', 
+	}
 
 // everything together, for that authentic feel
 var allTheCharacters = append(halfWidthKana, alphaNumerics...)
@@ -121,10 +302,10 @@ func main() {
 	}
 	// Use a println for fun..
 	fmt.Println("Opening connection to The Matrix.. Please stand by..")
-	// setup logging with logfile /dev/null or ~/.gomatrix-log
+	// setup logging with logfile /dev/null or ~/.kamatrix-log
 	filename := os.DevNull
 	if opts.Logging {
-		filename = os.Getenv("HOME") + "/.gomatrix-log"
+		filename = os.Getenv("HOME") + "/.kamatrix-log"
 	}
 	logfile, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
@@ -134,7 +315,7 @@ func main() {
 	defer logfile.Close()
 	log.SetOutput(logfile)
 	log.Println("-------------")
-	log.Println("Starting gomatrix. This logfile is for development/debug purposes.")
+	log.Println("Starting kamatrix. This logfile is for development/debug purposes.")
 	if opts.Ascii {
 		characters = alphaNumerics
 	} else if opts.Kana {
@@ -147,15 +328,15 @@ func main() {
 
 	// initialize tcell
 	if screen, err = tcell.NewScreen(); err != nil {
-		fmt.Println("Could not start tcell for gomatrix. View ~/.gomatrix-log for error messages.")
+		fmt.Println("Could not start tcell for kamatrix. View ~/.kamatrix-log for error messages.")
 		log.Printf("Cannot alloc screen, tcell.NewScreen() gave an error:\n%s", err)
 		os.Exit(1)
 	}
 
 	err = screen.Init()
 	if err != nil {
-		fmt.Println("Could not start tcell for gomatrix. View ~/.gomatrix-log for error messages.")
-		log.Printf("Cannot start gomatrix, screen.Init() gave an error:\n%s", err)
+		fmt.Println("Could not start tcell for kamatrix. View ~/.kamatrix-log for error messages.")
+		log.Printf("Cannot start kamatrix, screen.Init() gave an error:\n%s", err)
 		os.Exit(1)
 	}
 	screen.HideCursor()
@@ -311,8 +492,8 @@ EVENTS:
 	// close down
 	screen.Fini()
 
-	log.Println("stopping gomatrix")
-	fmt.Println("Thank you for connecting with Morpheus' Matrix API v4.2. Have a nice day!")
+	log.Println("stopping kamatrix")
+	fmt.Println("നന്ദി വീണ്ടും വരിക ")
 
 	// stop profiling (if required)
 	if len(opts.Profile) > 0 {

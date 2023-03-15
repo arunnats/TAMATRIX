@@ -1,18 +1,12 @@
-## gomatrix
-gomatrix connects to The Matrix and displays it's data streams in your terminal.
-
+## KAMATRIX 
+Fork of gomatrix by GeertJohan 
 ### Installation
-Install from source with `go install github.com/GeertJohan/gomatrix`
-
+Clone the Directory 'git clone https://github.com/tellmeY18/KAMATRIX.git' 
+build using 'go build'
 ### Usage
-Just run `gomatrix`. Use `gomatrix --help` to view all options.
-
-### Docker
-This application is available in docker.
-
-Build manually with `docker build -t gomatrix .` and `docker run -ti gomatrix`.
-
-Or pull the automated build version: `docker run -ti geertjohan/gomatrix`
-
+After building the binary you can run './KAMATRIX' from the Directory. 
 ### License:
 This project is licenced under a a Simplified BSD license. Please read the [LICENSE file](LICENSE).
+
+(I'd Like to change KAMATRIX to GPL V3 IDK how)
+
