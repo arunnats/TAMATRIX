@@ -25,7 +25,7 @@ var opts struct {
 	Kana bool `short:"k" long:"kana" description:"Use japanese kana's only instead of a mix of ascii/alphanumeric and kana's."`
 
 	// enable logging
-	Logging bool `short:"l" long:"log" description:"Enable logging debug messages to ~/.kamatrix-log."`
+	Logging bool `short:"l" long:"log" description:"Enable logging debug messages to ~/.tamatrix-log."`
 
 	// enable profiling
 	Profile string `short:"p" long:"profile" description:"Write profile to given file path"`
@@ -311,10 +311,10 @@ func main() {
 	}
 	// Use a println for fun..
 	fmt.Println("Opening connection to The Matrix.. Please stand by..")
-	// setup logging with logfile /dev/null or ~/.kamatrix-log
+	// setup logging with logfile /dev/null or ~/.tamatrix-log
 	filename := os.DevNull
 	if opts.Logging {
-		filename = os.Getenv("HOME") + "/.kamatrix-log"
+		filename = os.Getenv("HOME") + "/.tamatrix-log"
 	}
 	logfile, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
@@ -324,7 +324,7 @@ func main() {
 	defer logfile.Close()
 	log.SetOutput(logfile)
 	log.Println("-------------")
-	log.Println("Starting kamatrix. This logfile is for development/debug purposes.")
+	log.Println("Starting tamatrix. This logfile is for development/debug purposes.")
 	if opts.Ascii {
 		characters = alphaNumerics
 	} else if opts.Kana {
@@ -337,15 +337,15 @@ func main() {
 
 	// initialize tcell
 	if screen, err = tcell.NewScreen(); err != nil {
-		fmt.Println("Could not start tcell for kamatrix. View ~/.kamatrix-log for error messages.")
+		fmt.Println("Could not start tcell for tamatrix. View ~/.tamatrix-log for error messages.")
 		log.Printf("Cannot alloc screen, tcell.NewScreen() gave an error:\n%s", err)
 		os.Exit(1)
 	}
 
 	err = screen.Init()
 	if err != nil {
-		fmt.Println("Could not start tcell for kamatrix. View ~/.kamatrix-log for error messages.")
-		log.Printf("Cannot start kamatrix, screen.Init() gave an error:\n%s", err)
+		fmt.Println("Could not start tcell for tamatrix. View ~/.tamatrix-log for error messages.")
+		log.Printf("Cannot start tamatrix, screen.Init() gave an error:\n%s", err)
 		os.Exit(1)
 	}
 	screen.HideCursor()
@@ -501,7 +501,7 @@ EVENTS:
 	// close down
 	screen.Fini()
 
-	log.Println("stopping kamatrix")
+	log.Println("stopping tamatrix")
 	fmt.Println("நன்றி மீண்டும் வாருங்கள் ")
 
 	// stop profiling (if required)
