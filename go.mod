@@ -1,4 +1,4 @@
-module https://github.com/arunnats/TAMATRIX
+module github.com/tellmeY18/KAMATRIX
 
 go 1.13
 
